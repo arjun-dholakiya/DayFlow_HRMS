@@ -12,30 +12,50 @@ export default function AppNavbar() {
   };
 
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container>
         <Navbar.Brand
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            role === 'ADMIN' ? navigate('/admin') : navigate('/employee');
-          }}
+          style={{ cursor: 'pointer', fontWeight: 600 }}
+          onClick={() =>
+            role === 'ADMIN' ? navigate('/admin') : navigate('/employee')
+          }
         >
           DayFlow
         </Navbar.Brand>
 
-        <Nav className="me-auto">
-          {role === 'EMPLOYEE' && (
-            <Nav.Link onClick={() => navigate('/employee')}>Dashboard</Nav.Link>
-          )}
+        <Navbar.Toggle />
+        <Navbar.Collapse>
+          <Nav className="me-auto">
+            {role === 'EMPLOYEE' && (
+              <>
+                <Nav.Link onClick={() => navigate('/employee')}>
+                  Dashboard
+                </Nav.Link>
+                <Nav.Link onClick={() => navigate('/employee/attendance')}>
+                  Attendance
+                </Nav.Link>
+                <Nav.Link onClick={() => navigate('/employee/leave')}>
+                  Leave
+                </Nav.Link>
+              </>
+            )}
 
-          {role === 'ADMIN' && (
-            <Nav.Link onClick={() => navigate('/admin')}>Dashboard</Nav.Link>
-          )}
-        </Nav>
+            {role === 'ADMIN' && (
+              <>
+                <Nav.Link onClick={() => navigate('/admin')}>
+                  Dashboard
+                </Nav.Link>
+                <Nav.Link onClick={() => navigate('/admin/leave')}>
+                  Leave Requests
+                </Nav.Link>
+              </>
+            )}
+          </Nav>
 
-        <Button variant="outline-light" onClick={logout}>
-          Logout
-        </Button>
+          <Button variant="outline-light" size="sm" onClick={logout}>
+            Logout
+          </Button>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

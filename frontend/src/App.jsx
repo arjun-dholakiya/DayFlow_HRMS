@@ -6,12 +6,13 @@ import ProtectedRoute from './auth/ProtectedRoute';
 import EmployeeDashboard from './pages/employee/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
 
-// Temporary placeholders (will be replaced in next steps)
-const Attendance = () => <h3 style={{ padding: 40 }}>Attendance Page</h3>;
-const Leave = () => <h3 style={{ padding: 40 }}>Leave Page</h3>;
+import Attendance from './pages/employee/Attendance';
+import Leave from './pages/employee/Leave';
+import LeaveApproval from './pages/admin/LeaveApproval';
+
+// Optional placeholders (not implemented yet)
 const Employees = () => <h3 style={{ padding: 40 }}>Employees Page</h3>;
 const AdminAttendance = () => <h3 style={{ padding: 40 }}>Admin Attendance</h3>;
-const LeaveApproval = () => <h3 style={{ padding: 40 }}>Leave Approval</h3>;
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/employee/attendance"
           element={
@@ -38,6 +40,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/employee/leave"
           element={
@@ -56,6 +59,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/employees"
           element={
@@ -64,6 +68,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/attendance"
           element={
@@ -72,6 +77,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/leave"
           element={

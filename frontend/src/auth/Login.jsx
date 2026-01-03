@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Card, Form, Button, Alert } from 'react-bootstrap';
 import api from '../api/axios';
-import { setAuth, clearAuth, isLoggedIn, getRole } from './auth';
+import { setAuth, clearAuth } from './auth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  // 🔥 Clear old auth when visiting login page
   useEffect(() => {
     clearAuth();
   }, []);
@@ -25,11 +24,8 @@ export default function Login() {
 
     try {
       const res = await api.post('/auth/login', { email, password });
-
-      // Save fresh auth
       setAuth(res.data.token, res.data.user.role);
 
-      // Correct role-based redirect
       res.data.user.role === 'ADMIN'
         ? navigate('/admin')
         : navigate('/employee');

@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const { sequelize } = require('./database/models');
 const morgan = require('morgan');
+const cors = require('cors');
 
 // Import routes
 const authRoutes = require('./modules/v1/auth/routes/authRoutes');
@@ -12,6 +13,13 @@ const profileRoutes = require('./modules/v1/profile/routes/profileRoutes');
 const attendenceRoutes = require('./modules/v1/attendence/routes/attendencRoutes');
 const leaveRoutes = require('./modules/v1/leave/routes/leaveRoutes');
 
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  
 // Global middlewares
 app.use(express.json());
 app.use(morgan('dev'));

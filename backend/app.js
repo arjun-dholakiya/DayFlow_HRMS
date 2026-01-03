@@ -5,8 +5,14 @@ const app = express();
 const { sequelize } = require('./database/models');
 const morgan = require('morgan');
 
+// All Routes
+const authRoutes = require('./modules/v1/auth/routes/authRoutes');
+
 app.use(express.json());
 app.use(morgan('dev'));
+
+// Use Of Routes
+app.use('/api/v1/auth', authRoutes);
 
 sequelize
   .authenticate()

@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Signup request validation
 exports.registerSchema = Joi.object({
   employeeId: Joi.string().when('role', {
     is: 'EMPLOYEE',
@@ -12,6 +13,7 @@ exports.registerSchema = Joi.object({
   role: Joi.string().valid('EMPLOYEE', 'ADMIN').required()
 });
 
+// Login request validation
 exports.loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required()

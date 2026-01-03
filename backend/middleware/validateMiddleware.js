@@ -1,3 +1,4 @@
+// Validate request body using Joi schema
 module.exports = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body, { abortEarly: false });

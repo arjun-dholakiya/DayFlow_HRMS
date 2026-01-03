@@ -1,5 +1,6 @@
 const authService = require('../services/authService');
 
+// Register new user (Employee / Admin)
 exports.register = async (req, res) => {
   try {
     const user = await authService.register(req.body);
@@ -9,10 +10,12 @@ exports.register = async (req, res) => {
       user
     });
   } catch (err) {
+    // Email already exists
     if (err.message === 'EMAIL_EXISTS') {
       return res.status(400).json({ message: 'Email already exists' });
     }
 
+    // Employee must provide employeeId
     if (err.message === 'EMPLOYEE_ID_REQUIRED') {
       return res.status(400).json({
         message: 'Employee ID is required for employee registration'
@@ -23,6 +26,7 @@ exports.register = async (req, res) => {
   }
 };
 
+// Login user and return JWT token
 exports.login = async (req, res) => {
   try {
     const { user, token } = await authService.login(req.body);
@@ -37,6 +41,7 @@ exports.login = async (req, res) => {
       }
     });
   } catch (err) {
+    // Invalid email or password
     if (err.message === 'INVALID_CREDENTIALS') {
       return res.status(400).json({ message: 'Invalid credentials' });
     }

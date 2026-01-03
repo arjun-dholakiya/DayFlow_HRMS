@@ -1,3 +1,4 @@
+// Allow access only to specific role
 module.exports = (role) => {
   return (req, res, next) => {
     if (req.user.role !== role) {

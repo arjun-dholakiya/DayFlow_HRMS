@@ -15,11 +15,14 @@ const leaveRoutes = require('./modules/v1/leave/routes/leaveRoutes');
 
 app.use(
   cors({
-    origin: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: ['https://dayfloww-hrms.netlify.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
   })
 );
+
+app.options('*', cors());
 
 app.get('/healthz', (req, res) => {
   res.status(200).send('OK');

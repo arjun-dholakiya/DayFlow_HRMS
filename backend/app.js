@@ -21,6 +21,10 @@ app.use(
   })
 );
 
+app.get('/healthz', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Global middlewares
 app.use(express.json());
 app.use(morgan('dev'));

@@ -44,11 +44,12 @@ sequelize
 
 const PORT = process.env.PORT || 3000;
 
+app.get('/', (req, res) => {
+  res.send('Backend running...');
+});
+
 app.get('/api/v1/test', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Backend is working...'
-  });
+  res.json({ success: true });
 });
 
 // Start server

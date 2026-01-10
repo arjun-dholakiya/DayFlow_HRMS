@@ -13,13 +13,14 @@ const profileRoutes = require('./modules/v1/profile/routes/profileRoutes');
 const attendenceRoutes = require('./modules/v1/attendence/routes/attendencRoutes');
 const leaveRoutes = require('./modules/v1/leave/routes/leaveRoutes');
 
-
-app.use(cors({
+app.use(
+  cors({
     origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
-  }));
-  
+  })
+);
+
 // Global middlewares
 app.use(express.json());
 app.use(morgan('dev'));
@@ -38,6 +39,13 @@ sequelize
   .catch((err) => console.error('Connection Failed', err));
 
 const PORT = process.env.PORT || 3000;
+
+app.get('/api/v1/test', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Backend is working...'
+  });
+});
 
 // Start server
 app.listen(PORT, () => console.log(`Server Running On Port: ${PORT}`));

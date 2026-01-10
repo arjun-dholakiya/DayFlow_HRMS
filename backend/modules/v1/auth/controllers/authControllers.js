@@ -12,20 +12,9 @@ exports.register = async (req, res) => {
       user
     });
   } catch (err) {
-    // LOG THE REAL ERROR
-    console.error('REGISTER ERROR:', err);
+    // 🔥 THIS IS THE KEY
+    console.error('REGISTER ERROR STACK:', err);
 
-    if (err.message === 'EMAIL_EXISTS') {
-      return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    if (err.message === 'EMPLOYEE_ID_REQUIRED') {
-      return res.status(400).json({
-        message: 'Employee ID is required for employee registration'
-      });
-    }
-
-    // TEMP: expose real error message
     return res.status(500).json({
       message: 'Registration failed',
       error: err.message

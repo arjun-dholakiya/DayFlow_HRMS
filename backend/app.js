@@ -1,35 +1,23 @@
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 const app = express();
-const morgan = require('morgan');
-const { sequelize } = require('./database/models');
+const morgan = require("morgan");
+const { sequelize } = require("./database/models");
 
-/* ===============================
-   HARD CORS FIX (PRODUCTION SAFE)
-   =============================== */
-
+/* ===== FINAL CORS FIX ===== */
 app.use((req, res, next) => {
-  const allowedOrigins = [
-    'https://dayfloww-hrms.netlify.app',
-    'http://localhost:5173'
-  ];
-
-  const origin = req.headers.origin;
-
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, DELETE, OPTIONS'
+  res.header("Access-Control-Allow-Origin", "https://dayfloww-hrms.netlify.app");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
   );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
 
-  // 🚨 THIS IS THE KEY LINE
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(204);
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
   }
 
   next();

@@ -3,12 +3,14 @@ import Login from './auth/Login';
 import Signup from './auth/Signup';
 import ProtectedRoute from './auth/ProtectedRoute';
 
+
 import EmployeeDashboard from './pages/employee/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
 
 import Attendance from './pages/employee/Attendance';
 import Leave from './pages/employee/Leave';
 import LeaveApproval from './pages/admin/LeaveApproval';
+import Home from './pages/Home';
 
 // Optional placeholders (not implemented yet)
 const Employees = () => <h3 style={{ padding: 40 }}>Employees Page</h3>;
@@ -19,7 +21,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         {/* Public */}
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
         {/* Employee */}

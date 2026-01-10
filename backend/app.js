@@ -15,7 +15,7 @@ const leaveRoutes = require('./modules/v1/leave/routes/leaveRoutes');
 
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }));

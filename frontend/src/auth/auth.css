@@ -1,0 +1,31 @@
+.auth-bg {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+.auth-card {
+  width: 26rem;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.auth-btn {
+  background-color: #6366f1;
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.auth-btn:hover {
+  background-color: #4f46e5;
+}
+
+.auth-link {
+  color: #6366f1;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}

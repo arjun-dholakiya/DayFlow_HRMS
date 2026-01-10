@@ -1,19 +1,21 @@
 require('dotenv').config();
-
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const cors = require('cors');
 const { sequelize } = require('./database/models');
 
-// ✅ CORS MUST COME FIRST
-const allowedOrigins = [
-  'https://dayfloww-hrms.netlify.app',
-  'http://localhost:5173'
-];
+/* ===============================
+   HARD CORS FIX (PRODUCTION SAFE)
+   =============================== */
 
 app.use((req, res, next) => {
+  const allowedOrigins = [
+    'https://dayfloww-hrms.netlify.app',
+    'http://localhost:5173'
+  ];
+
   const origin = req.headers.origin;
+
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
@@ -25,13 +27,18 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-  // 🔥 VERY IMPORTANT: end preflight here
+  // 🚨 THIS IS THE KEY LINE
   if (req.method === 'OPTIONS') {
     return res.sendStatus(204);
   }
 
   next();
 });
+
+/* =============================== */
+
+app.use(express.json());
+app.use(morgan('dev'));
 
 // Body parser AFTER CORS
 app.use(express.json());

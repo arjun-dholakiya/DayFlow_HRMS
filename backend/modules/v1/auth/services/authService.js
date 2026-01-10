@@ -2,46 +2,66 @@ const bcrypt = require('bcryptjs');
 const { User, Profile } = require('../../../../database/models');
 const { generateToken } = require('../../../../utils/jwt');
 
-// Handle user registration logic
+// ===============================
+// REGISTER USER
+// ===============================
 exports.register = async (data) => {
   const { employeeId, name, email, password, role } = data;
 
-  // employeeId required only for EMPLOYEE role
+  // Validate required fields
+  if (!name || !email || !password || !role) {
+    throw new Error('MISSING_FIELDS');
+  }
+
+  // Employee must provide employeeId
   if (role === 'EMPLOYEE' && !employeeId) {
     throw new Error('EMPLOYEE_ID_REQUIRED');
   }
 
-  const finalEmployeeId = role === 'EMPLOYEE' ? employeeId : null;
-
-  // Prevent duplicate email
+  // Check duplicate email
   const existingUser = await User.findOne({ where: { email } });
   if (existingUser) {
     throw new Error('EMAIL_EXISTS');
   }
 
+  // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await User.create({
-    employeeId: finalEmployeeId,
+  // 🔥 IMPORTANT FIX:
+  // Do NOT send employeeId at all for ADMIN
+  const userPayload = {
     name,
     email,
     password: hashedPassword,
     role
-  });
+  };
 
-  // Create empty profile for user
+  if (role === 'EMPLOYEE') {
+    userPayload.employeeId = employeeId;
+  }
+
+  // Create user
+  const user = await User.create(userPayload);
+
+  // Create profile
   await Profile.create({ userId: user.id });
 
-  // Remove password before returning data
+  // Remove password before returning
   const userData = user.toJSON();
   delete userData.password;
 
   return userData;
 };
 
-// Handle login logic
+// ===============================
+// LOGIN USER
+// ===============================
 exports.login = async (data) => {
   const { email, password } = data;
+
+  if (!email || !password) {
+    throw new Error('INVALID_CREDENTIALS');
+  }
 
   const user = await User.findOne({ where: { email } });
   if (!user) {
@@ -53,7 +73,6 @@ exports.login = async (data) => {
     throw new Error('INVALID_CREDENTIALS');
   }
 
-  // Generate JWT token
   const token = generateToken({
     id: user.id,
     role: user.role

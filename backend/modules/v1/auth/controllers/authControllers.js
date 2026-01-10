@@ -3,6 +3,8 @@ const authService = require('../services/authService');
 // Register new user (Employee / Admin)
 exports.register = async (req, res) => {
   try {
+    console.log('REGISTER BODY:', req.body);
+
     const user = await authService.register(req.body);
 
     return res.status(201).json({
@@ -10,19 +12,24 @@ exports.register = async (req, res) => {
       user
     });
   } catch (err) {
-    // Email already exists
+    // LOG THE REAL ERROR
+    console.error('REGISTER ERROR:', err);
+
     if (err.message === 'EMAIL_EXISTS') {
       return res.status(400).json({ message: 'Email already exists' });
     }
 
-    // Employee must provide employeeId
     if (err.message === 'EMPLOYEE_ID_REQUIRED') {
       return res.status(400).json({
         message: 'Employee ID is required for employee registration'
       });
     }
 
-    return res.status(500).json({ message: 'Registration failed' });
+    // TEMP: expose real error message
+    return res.status(500).json({
+      message: 'Registration failed',
+      error: err.message
+    });
   }
 };
 

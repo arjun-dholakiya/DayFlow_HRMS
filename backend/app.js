@@ -1,22 +1,19 @@
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 const app = express();
-const morgan = require("morgan");
-const { sequelize } = require("./database/models");
+const morgan = require('morgan');
+const { sequelize } = require('./database/models');
 
 /* ===== FINAL CORS FIX ===== */
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://dayfloww-hrms.netlify.app");
   res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
+    'Access-Control-Allow-Origin',
+    'https://dayfloww-hrms.netlify.app'
   );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization"
-  );
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
 
@@ -24,9 +21,6 @@ app.use((req, res, next) => {
 });
 
 /* =============================== */
-
-app.use(express.json());
-app.use(morgan('dev'));
 
 // Body parser AFTER CORS
 app.use(express.json());

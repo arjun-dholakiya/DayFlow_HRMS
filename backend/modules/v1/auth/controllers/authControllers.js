@@ -12,7 +12,7 @@ exports.register = async (req, res) => {
       user
     });
   } catch (err) {
-    // 🔥 THIS IS THE KEY
+    //  THIS IS THE KEY
     console.error('REGISTER ERROR STACK:', err);
 
     return res.status(500).json({

@@ -27,7 +27,7 @@ exports.register = async (data) => {
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // 🔥 IMPORTANT FIX:
+  // IMPORTANT FIX:
   // Do NOT send employeeId at all for ADMIN
   const userPayload = {
     name,

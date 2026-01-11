@@ -43,7 +43,7 @@ sequelize
   .catch((err) => console.error('Connection Failed', err));
 
 // ---------- START SERVER ----------
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.APP_PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

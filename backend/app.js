@@ -27,11 +27,13 @@ app.get('/healthz', (req, res) => {
   res.status(200).send('OK');
 });
 
-// ---------- SERVE FRONTEND (IMPORTANT) ----------
+// ---------- SERVE FRONTEND ----------
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+// EXPRESS 5 SAFE SPA FALLBACK
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // ---------- DATABASE ----------

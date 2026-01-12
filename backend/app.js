@@ -2,7 +2,33 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const cors = require('cors');
 const { sequelize } = require('./database/models');
+
+// ---------- CORS (MUST BE FIRST) ----------
+const allowedOrigins = [
+  'http://localhost:5173', // local frontend (Vite)
+  'https://dayfloww-hrms.netlify.app' // Netlify prod
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow requests with no origin (like Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  })
+);
+
+// Handle preflight requests
+app.options('*', cors());
 
 // ---------- MIDDLEWARE ----------
 app.use(express.json());
@@ -31,6 +57,16 @@ sequelize
   .authenticate()
   .then(() => console.log('Database Connected...'))
   .catch((err) => console.error('Connection Failed', err));
+
+// ---------- GLOBAL ERROR HANDLER ----------
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
+});
 
 // ---------- START SERVER ----------
 const PORT = process.env.PORT || 3000;

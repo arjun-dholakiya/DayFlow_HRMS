@@ -8,17 +8,14 @@ require('dotenv').config();
 const basename = path.basename(__filename);
 const db = {};
 
-const sequelize = new Sequelize(
-  process.env.MYSQLDATABASE,
-  process.env.MYSQLUSER,
-  process.env.MYSQLPASSWORD,
-  {
-    host: process.env.MYSQLHOST,
-    port: process.env.MYSQLPORT,
-    dialect: 'mysql',
-    logging: false
+// USE MYSQL_URL (Railway way)
+const sequelize = new Sequelize(process.env.MYSQL_URL, {
+  dialect: 'mysql',
+  logging: false,
+  dialectOptions: {
+    connectTimeout: 60000
   }
-);
+});
 
 // Load models
 fs.readdirSync(__dirname)

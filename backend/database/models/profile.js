@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     static associate(models) {
       Profile.belongsTo(models.User, {
-        foreignKey: 'userId'
+        foreignKey: 'userId',
+        onDelete: 'CASCADE'
       });
     }
   }
@@ -19,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Profile'
+      modelName: 'Profile',
+      tableName: 'profiles',
+      freezeTableName: true
     }
   );
 

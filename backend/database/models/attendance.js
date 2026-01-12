@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class Attendance extends Model {
     static associate(models) {
       Attendance.belongsTo(models.User, {
-        foreignKey: 'userId'
+        foreignKey: 'userId',
+        onDelete: 'CASCADE'
       });
     }
   }
@@ -20,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Attendance'
+      modelName: 'Attendance',
+      tableName: 'attendances',
+      freezeTableName: true
     }
   );
 

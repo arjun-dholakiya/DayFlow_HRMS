@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class Leave extends Model {
     static associate(models) {
       Leave.belongsTo(models.User, {
-        foreignKey: 'userId'
+        foreignKey: 'userId',
+        onDelete: 'CASCADE'
       });
     }
   }
@@ -21,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Leave'
+      modelName: 'Leave',
+      tableName: 'leaves',
+      freezeTableName: true
     }
   );
 

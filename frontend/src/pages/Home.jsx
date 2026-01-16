@@ -21,8 +21,8 @@ export default function Home() {
       icon: (
         <svg
           viewBox="0 0 24 24"
-          width="32"
-          height="32"
+          width="28"
+          height="28"
           stroke="currentColor"
           strokeWidth="2"
           fill="none"
@@ -41,8 +41,8 @@ export default function Home() {
       icon: (
         <svg
           viewBox="0 0 24 24"
-          width="32"
-          height="32"
+          width="28"
+          height="28"
           stroke="currentColor"
           strokeWidth="2"
           fill="none"
@@ -62,13 +62,13 @@ export default function Home() {
       icon: (
         <svg
           viewBox="0 0 24 24"
-          width="32"
-          height="32"
+          width="28"
+          height="28"
           stroke="currentColor"
           strokeWidth="2"
           fill="none"
         >
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <rect x="3" y="11" width="18" height="11" rx="2" />
           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         </svg>
       ),
@@ -78,23 +78,18 @@ export default function Home() {
   ];
 
   return (
-    <div
-      style={{
-        backgroundColor: '#FFFFFF',
-        minHeight: '100vh',
-        fontFamily: "'Inter', sans-serif"
-      }}
-    >
+    <div className="bg-white min-vh-100">
       {/* NAVBAR */}
-      <Navbar bg="white" className="py-3 border-bottom sticky-top">
+      <Navbar bg="white" expand="md" className="py-3 border-bottom sticky-top">
         <Container>
           <Navbar.Brand className="fw-bold fs-3 text-primary">
             DayFlow
           </Navbar.Brand>
-          <div>
+
+          <div className="d-flex gap-3">
             <Button
               variant="link"
-              className="text-dark text-decoration-none me-3 fw-medium"
+              className="text-dark fw-medium text-decoration-none"
               onClick={() => navigate('/login')}
             >
               Login
@@ -111,27 +106,23 @@ export default function Home() {
       </Navbar>
 
       {/* HERO */}
-      <section className="py-5 mt-4">
+      <section className="py-5">
         <Container className="text-center">
           <Row className="justify-content-center">
             <Col lg={8}>
-              <h1
-                className="display-3 fw-bold mb-4"
-                style={{ color: '#1E293B', letterSpacing: '-2px' }}
-              >
-                HR Management{' '}
-                <span style={{ color: '#6366F1' }}>Simplified</span>
+              <h1 className="fw-bold mb-4 hero-title">
+                HR Management <span className="text-primary">Simplified</span>
               </h1>
 
-              <p className="lead text-muted fs-4 mb-5">
+              <p className="text-muted fs-5 mb-4">
                 Manage attendance, leaves, and employees with a simple and
                 modern HR platform.
               </p>
 
-              <div className="d-flex justify-content-center gap-4">
+              <div className="d-flex flex-column flex-sm-row justify-content-center gap-3">
                 <Button
                   size="lg"
-                  className="rounded-pill px-5 py-3 fw-bold border-0 shadow"
+                  className="rounded-pill px-5 fw-bold border-0 shadow"
                   style={{ backgroundColor: '#6366F1' }}
                   onClick={() => navigate('/signup')}
                 >
@@ -141,7 +132,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline-dark"
-                  className="rounded-pill px-5 py-3 fw-bold shadow-sm"
+                  className="rounded-pill px-5 fw-bold shadow-sm"
                   onClick={() => navigate('/login')}
                 >
                   Login
@@ -152,15 +143,13 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* FEATURES SECTION */}
+      {/* FEATURES */}
       <section className="py-5 bg-light">
         <Container>
-          <Row className="text-center mb-5">
+          <Row className="text-center mb-4">
             <Col>
-              <h2 className="fw-bold mb-3" style={{ color: '#1E293B' }}>
-                Features
-              </h2>
-              <p className="text-muted fs-5">
+              <h2 className="fw-bold">Features</h2>
+              <p className="text-muted fs-6">
                 Everything you need to manage your workforce efficiently
               </p>
             </Col>
@@ -168,23 +157,22 @@ export default function Home() {
 
           <Row className="g-4">
             {features.map((feature, index) => (
-              <Col md={4} key={index}>
-                <Card className="border-0 shadow-sm h-100 p-4 feature-card">
-                  <Card.Body className="text-center">
+              <Col lg={4} md={6} key={index}>
+                <Card className="border-0 shadow-sm h-100 feature-card">
+                  <Card.Body className="text-center p-4">
                     <div
-                      className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+                      className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        backgroundColor: feature.bgColor
+                        width: '72px',
+                        height: '72px',
+                        backgroundColor: feature.bgColor,
+                        color: feature.iconColor
                       }}
                     >
-                      <span style={{ color: feature.iconColor }}>
-                        {feature.icon}
-                      </span>
+                      {feature.icon}
                     </div>
 
-                    <Card.Title className="fw-bold h4 mb-3">
+                    <Card.Title className="fw-bold mb-2">
                       {feature.title}
                     </Card.Title>
 
@@ -199,14 +187,22 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* STYLES */}
       <style>{`
-        .feature-card {
-          transition: all 0.3s ease;
-          border-radius: 24px;
+        .hero-title {
+          font-size: clamp(2.2rem, 5vw, 3.5rem);
+          letter-spacing: -1px;
+          color: #1E293B;
         }
+
+        .feature-card {
+          border-radius: 22px;
+          transition: all 0.3s ease;
+        }
+
         .feature-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+          transform: translateY(-6px);
+          box-shadow: 0 16px 28px rgba(0,0,0,0.08);
         }
       `}</style>
     </div>
